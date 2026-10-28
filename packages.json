@@ -1,0 +1,26 @@
+[
+  {
+    "id": "glzr-io.glazewm",
+    "required": true
+  },
+  {
+    "id": "glzr-io.zebar",
+    "required": true
+  },
+  {
+    "id": "wez.wezterm",
+    "required": true
+  },
+  {
+    "id": "Microsoft.PowerToys",
+    "required": false
+  },
+  {
+    "id": "ShareX.ShareX",
+    "required": false
+  },
+  {
+    "id": "Git.Git",
+    "required": false
+  }
+]

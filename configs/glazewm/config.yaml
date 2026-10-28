@@ -1,0 +1,134 @@
+# Generated tokens are replaced by Install.ps1; edit this source then reapply.
+general:
+  startup_commands: ['shell-exec zebar start-widget-preset --pack omarchy-windows --widget-name bar --preset top']
+  shutdown_commands: []
+  config_reload_commands: []
+  focus_follows_cursor: false
+  toggle_workspace_on_refocus: false
+  cursor_jump: { enabled: true, trigger: monitor_focus }
+  hide_method: cloak
+  show_all_in_taskbar: false
+gaps:
+  scale_with_dpi: true
+  inner_gap: 10px
+  outer_gap: { top: 46px, right: 10px, bottom: 10px, left: 10px }
+window_effects:
+  focused_window:
+    border: { enabled: true, color: '{{accent}}' }
+  other_windows:
+    border: { enabled: true, color: '{{muted}}' }
+window_behavior:
+  initial_state: tiling
+  state_defaults:
+    floating: { centered: true, shown_on_top: false }
+    fullscreen: { maximized: false, shown_on_top: false }
+workspaces:
+  - name: '1'
+  - name: '2'
+  - name: '3'
+  - name: '4'
+  - name: '5'
+  - name: '6'
+  - name: '7'
+  - name: '8'
+  - name: '9'
+  - name: '10'
+window_rules:
+  - commands: ['ignore']
+    match:
+      - window_process: { equals: zebar }
+      - window_title: { equals: Command Palette }
+      - window_title: { regex: '[Pp]icture.in.[Pp]icture' }
+        window_class: { regex: 'Chrome_WidgetWin_1|MozillaDialogClass' }
+binding_modes: []
+keybindings:
+  - commands: ["focus --direction left"]
+    bindings: ["lwin+left", "alt+h", "lwin+h"]
+  - commands: ["move --direction left"]
+    bindings: ["lwin+shift+left", "alt+shift+h"]
+  - commands: ["focus --direction down"]
+    bindings: ["lwin+down", "alt+j", "lwin+j"]
+  - commands: ["move --direction down"]
+    bindings: ["lwin+shift+down", "alt+shift+j"]
+  - commands: ["focus --direction up"]
+    bindings: ["lwin+up", "alt+k", "lwin+k"]
+  - commands: ["move --direction up"]
+    bindings: ["lwin+shift+up", "alt+shift+k"]
+  - commands: ["focus --direction right"]
+    bindings: ["lwin+right", "alt+l"]
+  - commands: ["move --direction right"]
+    bindings: ["lwin+shift+right", "alt+shift+l"]
+  - commands: ["focus --workspace 1"]
+    bindings: ["lwin+1", "alt+1"]
+  - commands: ["move --workspace 1", "focus --workspace 1"]
+    bindings: ["lwin+shift+1", "alt+shift+1"]
+  - commands: ["focus --workspace 2"]
+    bindings: ["lwin+2", "alt+2"]
+  - commands: ["move --workspace 2", "focus --workspace 2"]
+    bindings: ["lwin+shift+2", "alt+shift+2"]
+  - commands: ["focus --workspace 3"]
+    bindings: ["lwin+3", "alt+3"]
+  - commands: ["move --workspace 3", "focus --workspace 3"]
+    bindings: ["lwin+shift+3", "alt+shift+3"]
+  - commands: ["focus --workspace 4"]
+    bindings: ["lwin+4", "alt+4"]
+  - commands: ["move --workspace 4", "focus --workspace 4"]
+    bindings: ["lwin+shift+4", "alt+shift+4"]
+  - commands: ["focus --workspace 5"]
+    bindings: ["lwin+5", "alt+5"]
+  - commands: ["move --workspace 5", "focus --workspace 5"]
+    bindings: ["lwin+shift+5", "alt+shift+5"]
+  - commands: ["focus --workspace 6"]
+    bindings: ["lwin+6", "alt+6"]
+  - commands: ["move --workspace 6", "focus --workspace 6"]
+    bindings: ["lwin+shift+6", "alt+shift+6"]
+  - commands: ["focus --workspace 7"]
+    bindings: ["lwin+7", "alt+7"]
+  - commands: ["move --workspace 7", "focus --workspace 7"]
+    bindings: ["lwin+shift+7", "alt+shift+7"]
+  - commands: ["focus --workspace 8"]
+    bindings: ["lwin+8", "alt+8"]
+  - commands: ["move --workspace 8", "focus --workspace 8"]
+    bindings: ["lwin+shift+8", "alt+shift+8"]
+  - commands: ["focus --workspace 9"]
+    bindings: ["lwin+9", "alt+9"]
+  - commands: ["move --workspace 9", "focus --workspace 9"]
+    bindings: ["lwin+shift+9", "alt+shift+9"]
+  - commands: ["focus --workspace 10"]
+    bindings: ["lwin+0", "alt+0"]
+  - commands: ["move --workspace 10", "focus --workspace 10"]
+    bindings: ["lwin+shift+0", "alt+shift+0"]
+  - commands: ["close"]
+    bindings: ["lwin+q"]
+  - commands: ["toggle-floating --centered"]
+    bindings: ["lwin+t", "lwin+o"]
+  - commands: ["toggle-fullscreen"]
+    bindings: ["lwin+f"]
+  - commands: ["toggle-tiling-direction"]
+    bindings: ["lwin+v"]
+  - commands: ["wm-toggle-pause"]
+    bindings: ["alt+shift+p"]
+  - commands: ["wm-exit"]
+    bindings: ["alt+shift+escape"]
+  - commands: ["wm-reload-config"]
+    bindings: ["lwin+control+r"]
+  - commands: ["focus --recent-workspace"]
+    bindings: ["alt+oem_tilde"]
+  - commands: ["resize --width -2%"]
+    bindings: ["lwin+oem_minus"]
+  - commands: ["resize --width +2%"]
+    bindings: ["lwin+oem_plus"]
+  - commands: ["resize --height -2%"]
+    bindings: ["lwin+shift+oem_minus"]
+  - commands: ["resize --height +2%"]
+    bindings: ["lwin+shift+oem_plus"]
+  - commands: ["shell-exec wezterm-gui.exe"]
+    bindings: ["lwin+enter"]
+  - commands: ["shell-exec explorer.exe https://www.google.com"]
+    bindings: ["lwin+shift+b", "lwin+shift+enter"]
+  - commands: ["shell-exec explorer.exe"]
+    bindings: ["lwin+shift+f"]
+  - commands: ["shell-exec ms-screenclip:"]
+    bindings: ["print_screen"]
+  - commands: ["shell-exec explorer.exe https://chatgpt.com"]
+    bindings: ["lwin+shift+a"]

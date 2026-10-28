@@ -1,0 +1,15 @@
+name: Verify installer
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Windows PowerShell 5.1 parser and isolated lifecycle
+        shell: powershell
+        run: .\tests\Verify.ps1
+      - name: PowerShell 7 parser and isolated lifecycle
+        shell: pwsh
+        run: .\tests\Verify.ps1

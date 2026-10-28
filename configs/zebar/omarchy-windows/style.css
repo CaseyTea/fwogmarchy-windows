@@ -1,0 +1,9 @@
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0 10px; font: 12px 'JetBrainsMono Nerd Font', Consolas, monospace; color: {{foreground}}; }
+main { height: 30px; display: flex; align-items: center; gap: 18px; padding: 0 12px; background: {{background}}; border: 1px solid {{muted}}; border-radius: 6px; }
+strong { color: {{accent}}; font-size: 11px; letter-spacing: 1px; }
+nav { display: flex; gap: 4px; }
+button { border: 0; border-radius: 3px; padding: 3px 8px; background: {{lighter_background}}; color: {{foreground}}; cursor: pointer; }
+button.active { background: {{accent}}; color: {{background}}; }
+#status { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; flex: 1; color: {{dark_foreground}}; }
+time { white-space: nowrap; }
