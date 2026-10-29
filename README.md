@@ -16,12 +16,12 @@ Use your normal Windows user account. WinGet may show an administrator prompt fo
 2. Clone the private repository using Git Credential Manager/browser sign-in or an authenticated GitHub CLI:
 
    ```powershell
-   git clone https://github.com/CaseyTea/omarchy-windows.git
-   cd omarchy-windows
+   git clone https://github.com/CaseyTea/fwogmarchy-windows.git
+   cd fwogmarchy-windows
    .\install.cmd
    ```
 
-   Alternatively, after `gh auth login`, use `gh repo clone CaseyTea/omarchy-windows`.
+   Alternatively, after `gh auth login`, use `gh repo clone CaseyTea/fwogmarchy-windows`.
 
 Setup installs missing packages, backs up settings, applies the configurations, adds a login startup entry, and starts GlazeWM. It fails before writing configs if required executables cannot be found. If an installer requests a restart, reboot and rerun setup. Internet is required for installation and the bar's initial API load.
 

@@ -3,6 +3,7 @@
 ## 2026-10-29
 
 - Added an opt-in Alt+Shift+Space app launcher using PowerToys Command Palette, with a property-only shortcut backup/restore helper. Alt+F1 reads and displays the actual configured launcher shortcut.
+- Updated clone instructions for the renamed `CaseyTea/fwogmarchy-windows` repository.
 - Installed and exercised the desktop on Windows 11 Pro, build 26200, with two monitors.
 - Added an Alt+F1 shortcut menu with action/key search, live config parsing on opening, Fwog Pond colors, and single-window activation.
 - Installed the menu helpers and palette alongside the startup/recovery scripts so they survive moving the clone.
