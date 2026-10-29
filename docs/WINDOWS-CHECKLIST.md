@@ -24,7 +24,8 @@ and Cascadia Mono fallback. Unchecked items below still need manual validation.
 - [ ] Test elevated apps; do not automatically elevate the whole desktop to work around failures.
 - [x] Confirm PowerToys Command Palette is enabled and running.
 - [x] Configure Command Palette for Alt+Shift+Space; preserve and back up its original shortcut.
-- [ ] Confirm Alt+Shift+Space searches for and opens an application; confirm it also works while GlazeWM is paused.
+- [x] Confirm Alt+Shift+Space opens the launcher, searches for an application, and launches it; user verified on 2026-10-29.
+- [ ] Confirm the launcher shortcut also works while GlazeWM is paused.
 - [ ] Enable PowerToys Run at startup if wanted, then verify launcher availability after signing in.
 - [ ] Open ShareX and select local capture destinations/hotkeys if desired.
 - [ ] Sign out/in; confirm startup is singular and uses this project's managed configuration.
