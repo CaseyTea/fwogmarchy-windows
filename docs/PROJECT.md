@@ -38,7 +38,8 @@ when available; a missing or malformed external config does not break the menu.
 Zebar's pack name is `omarchy-windows`, matching the startup command. The bar's
 HTML, CSS, and JavaScript are explicitly listed in `includeFiles`; omitting
 those assets caused the original blank/error bar. GlazeWM starts with a hidden
-console window.
+console window. The bar uses normal window priority so fullscreen games can
+cover it; GlazeWM's existing top gap keeps tiled desktop windows below it.
 
 Each managed destination is recorded in an installation manifest before writing it. Existing file contents are saved once; reruns retain this baseline. Restore archives current managed files and restores originals, or removes files the project created. Settings backups stay outside the repository. Packages are installed before config changes; a required package failure stops application. Files already written during a later failure can be recovered using the manifest. There is no claim of a system-wide transaction or rollback of package installs.
 

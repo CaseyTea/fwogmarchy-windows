@@ -65,6 +65,10 @@ installer does not replace PowerToys or ShareX settings. Print Screen uses
 Windows capture, not ShareX. Zebar shows current-monitor workspaces and a local
 clock. The Windows taskbar remains available.
 
+The Fwog Pond bar uses normal window priority so fullscreen games and videos
+can cover it. GlazeWM reserves space above tiled desktop windows for the bar.
+Floating windows keep their always-on-top behavior.
+
 ## Application launcher
 
 Press **Alt+Shift+Space**, type an application name, and press **Enter** to open

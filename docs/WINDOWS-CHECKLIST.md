@@ -9,6 +9,8 @@ and Cascadia Mono fallback. Unchecked items below still need manual validation.
 - [x] Run Doctor.ps1; verify three core executables and configuration files are found.
 - [ ] Open three ordinary apps; verify automatic tiling and visible focused border.
 - [x] Confirm one Fwog Pond bar per screen, clickable workspace buttons, and local clock.
+- [x] Confirm the bar stays behind the active game and stops covering its menus; user verified after changing the bar to normal window priority on 2026-10-29.
+- [ ] Check other fullscreen and borderless games, each monitor, and returning to desktop use after Alt+Tab.
 - [x] Confirm Alt+F1 opens the centered shortcut menu; verify current binding parsing and search filtering.
 - [ ] Confirm search-field focus, keyboard scrolling, repeated opening, and Esc dismissal on each monitor.
 - [ ] If the bar is blank, verify internet access, Zebar v3, and WebView2; inspect Zebar logs.

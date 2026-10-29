@@ -7,7 +7,7 @@
       "name": "bar",
       "htmlPath": "index.html",
       "includeFiles": ["index.html", "style.css", "bar.js"],
-      "zOrder": "top_most",
+      "zOrder": "normal",
       "shownInTaskbar": false,
       "focused": false,
       "resizable": false,

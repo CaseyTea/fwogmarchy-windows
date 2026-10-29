@@ -2,6 +2,7 @@
 
 ## 2026-10-29
 
+- Changed the Fwog Pond bar to normal window priority so it can be covered by fullscreen games and videos. Desktop tiling keeps its existing top gap.
 - Added an opt-in Alt+Shift+Space app launcher using PowerToys Command Palette, with a property-only shortcut backup/restore helper. Alt+F1 reads and displays the actual configured launcher shortcut.
 - Updated clone instructions for the renamed `CaseyTea/fwogmarchy-windows` repository.
 - Installed and exercised the desktop on Windows 11 Pro, build 26200, with two monitors.
