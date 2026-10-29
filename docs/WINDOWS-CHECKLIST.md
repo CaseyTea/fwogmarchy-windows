@@ -22,7 +22,10 @@ and Cascadia Mono fallback. Unchecked items below still need manual validation.
 - [ ] Test Zoom join dialogs, meeting controls, and screen sharing after floating/tiling transitions.
 - [ ] Check different monitor scaling, unplug/replug, sleep/resume, and games with tiling paused.
 - [ ] Test elevated apps; do not automatically elevate the whole desktop to work around failures.
-- [ ] Open PowerToys and enable Command Palette with your preferred launcher shortcut.
+- [x] Confirm PowerToys Command Palette is enabled and running.
+- [x] Configure Command Palette for Alt+Shift+Space; preserve and back up its original shortcut.
+- [ ] Confirm Alt+Shift+Space searches for and opens an application; confirm it also works while GlazeWM is paused.
+- [ ] Enable PowerToys Run at startup if wanted, then verify launcher availability after signing in.
 - [ ] Open ShareX and select local capture destinations/hotkeys if desired.
 - [ ] Sign out/in; confirm startup is singular and uses this project's managed configuration.
 - [x] Quit GlazeWM/Zebar; rerun install with -SkipPackages; verify baseline backups remain intact.

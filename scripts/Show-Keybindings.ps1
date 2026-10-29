@@ -20,7 +20,7 @@ if (!$created) {
 $activationSignal = [Threading.EventWaitHandle]::new($false, [Threading.EventResetMode]::AutoReset, 'Local\OmarchyWindows.ShortcutMenu.Activate')
 $timer = $null
 try {
-    $shortcuts = @(Get-DesktopKeybindings $ConfigPath)
+    $shortcuts = @((@(Get-DesktopKeybindings $ConfigPath) + @(Get-AppLauncherKeybinding)) | Sort-Object Category,Order)
     $colors = @{ background='#172823'; dark_background='#11201c'; lighter_background='#2b4339'; foreground='#dce8ce'; dark_foreground='#9eb39d'; accent='#b5d96b'; muted='#466257' }
     $themePath = Join-Path $PSScriptRoot 'theme.json'
     if (Test-Path -LiteralPath $themePath) {

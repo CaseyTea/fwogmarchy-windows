@@ -27,6 +27,14 @@ and activation signal bring an existing menu forward instead of opening copies.
 The menu floats, and floating windows default to always on top. Closing a
 focused window uses Alt+Shift+Q after Windows intercepted Win+Q.
 
+PowerToys Command Palette provides application search on Alt+Shift+Space after
+running `Set-AppLauncher.ps1`. PowerToys owns activation independently of
+GlazeWM. The helper backs up and changes only the shortcut, with a separate
+`-Restore` action that preserves newer unrelated preferences. The main installer
+copies the helper but does not replace PowerToys settings or enable its startup.
+The shortcut menu reads Command Palette's actual hotkey from its local settings
+when available; a missing or malformed external config does not break the menu.
+
 Zebar's pack name is `omarchy-windows`, matching the startup command. The bar's
 HTML, CSS, and JavaScript are explicitly listed in `includeFiles`; omitting
 those assets caused the original blank/error bar. GlazeWM starts with a hidden

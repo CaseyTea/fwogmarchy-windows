@@ -32,6 +32,7 @@ Review the scripts before running. `install.cmd` uses a process-only execution p
 | Shortcut | Action |
 | --- | --- |
 | **Alt+F1** | Search current desktop shortcuts; Esc closes the menu |
+| **Alt+Shift+Space** | Search and open applications with Command Palette (after launcher setup below) |
 | Win+Enter | Terminal |
 | Win+Shift+Enter / Win+Shift+B | Default browser (opens Google) |
 | Win+Shift+F | Explorer |
@@ -58,7 +59,37 @@ Review the scripts before running. `install.cmd` uses a process-only execution p
 
 Win+L remains Windows lock. Windows may intercept other Win combinations, including Win+H, Win+V, Win+F, and Win+numbers. Test them before relying on them. Alt navigation/workspace fallbacks are provided. See [the shortcut conflict audit](docs/SHORTCUT-CONFLICTS.md) for the overlaps that remain. Native Alt+Tab is preserved. Pause tiling for games or applications that need their own Alt shortcuts. If you cannot exit using a shortcut, use GlazeWM's tray icon or Task Manager.
 
-PowerToys Command Palette and ShareX are installed with their own defaults. Configure their launch/capture hotkeys through their UIs if desired; the installer does not replace their settings. Print Screen uses Windows capture, not ShareX. Zebar shows current-monitor workspaces and a local clock. The Windows taskbar remains available.
+PowerToys Command Palette provides application search; its launcher setup is
+described below. ShareX keeps its own defaults and capture hotkeys. The main
+installer does not replace PowerToys or ShareX settings. Print Screen uses
+Windows capture, not ShareX. Zebar shows current-monitor workspaces and a local
+clock. The Windows taskbar remains available.
+
+## Application launcher
+
+Press **Alt+Shift+Space**, type an application name, and press **Enter** to open
+it. This uses [PowerToys Command Palette](https://learn.microsoft.com/en-us/windows/powertoys/command-palette/overview).
+PowerToys owns this shortcut, so it works independently of GlazeWM's pause state.
+Windows' Win+Space keyboard-language switcher is kept available.
+
+On a new machine, open PowerToys, enable Command Palette, and open it once using
+its default **Win+Alt+Space** shortcut. Then run:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Set-AppLauncher.ps1
+```
+
+The helper changes only the activation shortcut and saves the original under
+`%LOCALAPPDATA%\OmarchyWindows\command-palette-hotkey-original.json`. It preserves
+your extensions, pinned items, appearance, and other preferences. If the new
+shortcut is not picked up immediately, restart Command Palette. Enable
+PowerToys' **Run at startup** option to keep the launcher available after login.
+
+To restore just the previous launcher shortcut, run the same helper with
+`-Restore`. The core desktop file restore does not change this PowerToys setting.
+Run the launcher restore first if you want both undone.
+Alt+F1 shows the actual launcher shortcut read from Command Palette's settings,
+including changes made later in its UI.
 
 ## Shortcut menu
 
@@ -68,9 +99,10 @@ such as `close`, `terminal`, or `workspace 10`, or a key combination such as
 brings the existing menu to the front.
 
 The menu reads desktop bindings from your active GlazeWM config each time it
-opens, including local shortcut changes. It supports the inline and block
-string lists used by this project. PowerToys and individual applications have
-their own shortcut settings. Alt+F1 follows GlazeWM's pause state; use
+opens, including local shortcut changes, plus Command Palette's activation
+shortcut when its settings are available. It supports the inline and block
+string lists used by this project. Other PowerToys utilities and individual
+applications have their own shortcut settings. Alt+F1 follows GlazeWM's pause state; use
 Alt+Shift+P to resume desktop shortcuts when paused.
 
 ## Floating windows
@@ -174,4 +206,4 @@ Run automated checks with `.\tests\Verify.ps1` in Windows PowerShell 5.1 or
 PowerShell 7. The lifecycle checks require GlazeWM and Zebar to be closed,
 including when their file targets are temporary; GitHub Actions runs both shells
 on a clean Windows runner. To check shortcut parsing and search while using the
-desktop, run `.\tests\Keybindings.ps1`.
+desktop, run `.\tests\Keybindings.ps1` and `.\tests\AppLauncher.ps1`.

@@ -114,3 +114,28 @@ function Find-DesktopKeybindings($Entries, [string]$Query) {
         if ($matchesAll) { $entry }
     }
 }
+
+# Read the external launcher shortcut without executing commands or copying its other settings.
+function Get-AppLauncherKeybinding([string]$SettingsPath = (Join-Path $env:LOCALAPPDATA 'Packages\Microsoft.CommandPalette_8wekyb3d8bbwe\LocalState\settings.json')) {
+    if (!(Test-Path -LiteralPath $SettingsPath -PathType Leaf)) { return }
+    try {
+        $hotkey = (Get-Content -LiteralPath $SettingsPath -Raw | ConvertFrom-Json).Hotkey
+        if (!$hotkey -or !$hotkey.code) { return }
+        $keys = @()
+        if ($hotkey.win) { $keys += 'Win' }
+        if ($hotkey.ctrl) { $keys += 'Ctrl' }
+        if ($hotkey.alt) { $keys += 'Alt' }
+        if ($hotkey.shift) { $keys += 'Shift' }
+        $code = [int]$hotkey.code
+        $key = if ($code -eq 32) { 'Space' }
+            elseif (($code -ge 48 -and $code -le 57) -or ($code -ge 65 -and $code -le 90)) { [string][char]$code }
+            elseif ($code -ge 112 -and $code -le 135) { 'F'+($code-111) }
+            elseif ($hotkey.key) { [string]$hotkey.key }
+            else { 'Key '+$code }
+        $keys += $key
+        [pscustomobject]@{ Order=1000; Category='Apps'; Action='Search apps (application launcher)'; Shortcuts=($keys -join '+'); Commands='PowerToys Command Palette' }
+    } catch {
+        # An absent, upgrading, or partially written external config must not break desktop help.
+        return
+    }
+}

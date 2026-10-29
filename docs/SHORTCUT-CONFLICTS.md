@@ -31,6 +31,11 @@ resume with the same combination. GlazeWM's tray menu is the recovery path if
 a shortcut is intercepted. Check Alt+Shift+Escape on the target build as well;
 it shares Alt+Escape's window-cycling chord family.
 
-The menu reports configured GlazeWM shortcuts. It does not detect which keys
-Windows or another app will intercept, and it does not include independent
-PowerToys or ShareX shortcuts.
+Alt+Shift+Space is assigned directly to PowerToys Command Palette by the launcher
+setup helper. This avoids assigning Windows' Win+Space language-switching chord
+to the launcher. Applications, input methods, or custom shortcuts can still
+claim Alt+Shift+Space; verify it on the intended machine.
+
+The menu reports configured GlazeWM shortcuts and reads Command Palette's actual
+activation shortcut. It does not detect which keys Windows or another app will
+intercept, and it does not list other PowerToys or ShareX shortcuts.

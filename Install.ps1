@@ -68,7 +68,7 @@ if (!$SandboxRoot) {
     }
 }
 # Copy management scripts into a stable location so moving the clone does not break login startup.
-foreach ($name in @('Common.ps1','Start-Desktop.ps1','Restore.ps1','Doctor.ps1','Keybindings.ps1','Show-Keybindings.ps1')) {
+foreach ($name in @('Common.ps1','Start-Desktop.ps1','Restore.ps1','Doctor.ps1','Keybindings.ps1','Show-Keybindings.ps1','Set-AppLauncher.ps1')) {
     $planned += @{ Path=(Join-Path $stateDirectory $name); Content=(Get-Content -LiteralPath "$PSScriptRoot\scripts\$name" -Raw) }
 }
 $planned += @{ Path=(Join-Path $stateDirectory 'theme.json'); Content=(Get-Content -LiteralPath "$PSScriptRoot\theme.json" -Raw) }
