@@ -20,7 +20,7 @@ window_effects:
 window_behavior:
   initial_state: tiling
   state_defaults:
-    floating: { centered: true, shown_on_top: false }
+    floating: { centered: true, shown_on_top: true }
     fullscreen: { maximized: false, shown_on_top: false }
 workspaces:
   - name: '1'
@@ -34,6 +34,9 @@ workspaces:
   - name: '9'
   - name: '10'
 window_rules:
+  - commands: ['set-floating --centered']
+    match:
+      - window_title: { equals: Omarchy Shortcuts }
   - commands: ['ignore']
     match:
       - window_process: { equals: zebar }
@@ -42,6 +45,8 @@ window_rules:
         window_class: { regex: 'Chrome_WidgetWin_1|MozillaDialogClass' }
 binding_modes: []
 keybindings:
+  - commands: ['shell-exec --hide-window powershell.exe -NoProfile -STA -ExecutionPolicy Bypass -WindowStyle Hidden -File "%LOCALAPPDATA%\OmarchyWindows\Show-Keybindings.ps1"']
+    bindings: ['alt+f1']
   - commands: ["focus --direction left"]
     bindings: ["lwin+left", "alt+h", "lwin+h"]
   - commands: ["move --direction left"]
@@ -99,7 +104,7 @@ keybindings:
   - commands: ["move --workspace 10", "focus --workspace 10"]
     bindings: ["lwin+shift+0", "alt+shift+0"]
   - commands: ["close"]
-    bindings: ["lwin+q"]
+    bindings: ["alt+shift+q"]
   - commands: ["toggle-floating --centered"]
     bindings: ["lwin+t", "lwin+o"]
   - commands: ["toggle-fullscreen"]

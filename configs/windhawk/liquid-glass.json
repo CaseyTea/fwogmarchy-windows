@@ -1,0 +1,16 @@
+{
+  "theme": "OS26_Liquid_Glass_variant_DarkMacDock",
+  "styleConstants[0]": "IconBackground=<LinearGradientBrush StartPoint=\"0.47,-0.29\" EndPoint=\"0.50,1.29\"><GradientStop Offset=\"0.18\" Color=\"#802B4339\"/><GradientStop Offset=\"0.3\" Color=\"#70172823\"/><GradientStop Offset=\"0.5\" Color=\"#6011201C\"/><GradientStop Offset=\"0.81\" Color=\"#500C1714\"/></LinearGradientBrush>",
+  "controlStyles[0].target": "Grid#IconPanel@CommonStates > Image#Icon, Taskbar.TaskListLabeledButtonPanel#IconPanel@CommonStates > Image#Icon",
+  "controlStyles[0].styles[0]": "Opacity=0.82",
+  "controlStyles[0].styles[1]": "Opacity@ActiveNormal=0.82",
+  "controlStyles[0].styles[2]": "Opacity@InactiveNormal=0.82",
+  "controlStyles[0].styles[3]": "Opacity@ActivePointerOver=1",
+  "controlStyles[0].styles[4]": "Opacity@InactivePointerOver=1",
+  "controlStyles[0].styles[5]": "Opacity@ActivePressed=1",
+  "controlStyles[0].styles[6]": "Opacity@InactivePressed=1",
+  "controlStyles[1].target": "Taskbar.TaskbarFrame > Grid#RootGrid",
+  "controlStyles[1].styles[0]": "RequestedTheme=Dark",
+  "controlStyles[2].target": "StackPanel#SystemTrayFrameGrid, Grid#SystemTrayFrameGrid",
+  "controlStyles[2].styles[0]": "RequestedTheme=Dark"
+}

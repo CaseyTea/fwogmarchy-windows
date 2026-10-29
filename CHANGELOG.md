@@ -1,0 +1,15 @@
+# Change log
+
+## 2026-10-29
+
+- Installed and exercised the desktop on Windows 11 Pro, build 26200, with two monitors.
+- Added an Alt+F1 shortcut menu with action/key search, live config parsing on opening, Fwog Pond colors, and single-window activation.
+- Installed the menu helpers and palette alongside the startup/recovery scripts so they survive moving the clone.
+- Changed close-focused-window from Win+Q to Alt+Shift+Q.
+- Made centered floating windows always on top by default; fullscreen keeps its separate default.
+- Fixed the blank Zebar bar by matching its pack name to the startup command and including the HTML, CSS, and JavaScript assets.
+- Hid the GlazeWM startup console window.
+- Added shortcut-parser/search checks and included menu cleanup in the isolated installer lifecycle checks.
+- Recorded Windows shortcut overlaps and the manual checks still outstanding. Existing overlapping bindings were retained.
+- Reviewed and tried a Liquid Glass taskbar with translucent icons, then restored the original taskbar settings at the user's request. The preset and restore helper remain optional; the main installer never installs or configures Windhawk.
+- Recorded that the Zoom meeting-window issue recovered after floating was toggled off; no Zoom-specific rule was added.

@@ -11,5 +11,5 @@ foreach ($name in @('glazewm.exe','zebar.exe','wezterm-gui.exe')) {
 if (!(Get-Process glazewm -ErrorAction SilentlyContinue)) {
     $wm = Find-DesktopExecutable 'glazewm.exe'
     $config = Join-Path $env:USERPROFILE '.glzr\glazewm\config.yaml'
-    Start-Process -FilePath $wm -ArgumentList @('start', '--config', ('"'+$config+'"'))
+    Start-Process -FilePath $wm -WindowStyle Hidden -ArgumentList @('start', '--config', ('"'+$config+'"'))
 }

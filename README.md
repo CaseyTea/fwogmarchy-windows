@@ -2,7 +2,11 @@
 
 A personal Windows 11 desktop setup inspired by your Omarchy environment. Installs GlazeWM, Zebar, WezTerm, PowerToys, ShareX, and Git; applies automatic tiling, ten workspaces, familiar shortcuts, and your Fwog Pond colors to the window borders, bar, and terminal.
 
-This is an initial implementation. Installer recovery is tested in a temporary directory; real window behavior and shortcut conflicts must be checked on Windows 11. See [the acceptance checklist](docs/WINDOWS-CHECKLIST.md).
+Installed and exercised on Windows 11 Pro, build 26200, with two monitors on
+2026-10-29. The bar, shortcut menu, terminal, and floating defaults have been
+checked; broader application and startup checks remain in [the acceptance
+checklist](docs/WINDOWS-CHECKLIST.md). See [the change log](CHANGELOG.md) for the
+latest desktop updates.
 
 ## Install on your Windows computer
 
@@ -27,6 +31,7 @@ Review the scripts before running. `install.cmd` uses a process-only execution p
 
 | Shortcut | Action |
 | --- | --- |
+| **Alt+F1** | Search current desktop shortcuts; Esc closes the menu |
 | Win+Enter | Terminal |
 | Win+Shift+Enter / Win+Shift+B | Default browser (opens Google) |
 | Win+Shift+F | Explorer |
@@ -38,8 +43,8 @@ Review the scripts before running. `install.cmd` uses a process-only execution p
 | Win+Shift+arrows / Alt+Shift+H/J/K/L | Move window directionally |
 | Alt+1 through Alt+0 | Workspace fallback if Windows intercepts Win+number |
 | Alt+Shift+1 through Alt+Shift+0 | Move-and-follow workspace fallback |
-| Win+Q | Close focused window |
-| Win+T / Win+O | Toggle centered floating window |
+| Alt+Shift+Q | Close focused window |
+| Win+T / Win+O | Toggle centered floating window (always on top) |
 | Win+F | Toggle fullscreen |
 | Win+V | Change tiling split direction |
 | Win+minus / Win+equals | Decrease/increase width |
@@ -51,9 +56,65 @@ Review the scripts before running. `install.cmd` uses a process-only execution p
 | Print Screen | Windows region screenshot |
 | Win+Shift+A | ChatGPT in default browser |
 
-Win+L remains Windows lock. Windows may intercept other Win combinations, including Win+H, Win+V, Win+F, and Win+numbers. Test them before relying on them. Alt navigation/workspace fallbacks are provided. Native Alt+Tab is preserved. Pause tiling for games or applications that need their own Alt shortcuts. If you cannot exit using a shortcut, use GlazeWM's tray icon or Task Manager.
+Win+L remains Windows lock. Windows may intercept other Win combinations, including Win+H, Win+V, Win+F, and Win+numbers. Test them before relying on them. Alt navigation/workspace fallbacks are provided. See [the shortcut conflict audit](docs/SHORTCUT-CONFLICTS.md) for the overlaps that remain. Native Alt+Tab is preserved. Pause tiling for games or applications that need their own Alt shortcuts. If you cannot exit using a shortcut, use GlazeWM's tray icon or Task Manager.
 
 PowerToys Command Palette and ShareX are installed with their own defaults. Configure their launch/capture hotkeys through their UIs if desired; the installer does not replace their settings. Print Screen uses Windows capture, not ShareX. Zebar shows current-monitor workspaces and a local clock. The Windows taskbar remains available.
+
+## Shortcut menu
+
+Press **Alt+F1** to open the searchable Fwog Pond shortcut menu. Type an action
+such as `close`, `terminal`, or `workspace 10`, or a key combination such as
+`Alt+Shift+Q`. Press **Esc** or click **Close** to dismiss it. Repeating Alt+F1
+brings the existing menu to the front.
+
+The menu reads desktop bindings from your active GlazeWM config each time it
+opens, including local shortcut changes. It supports the inline and block
+string lists used by this project. PowerToys and individual applications have
+their own shortcut settings. Alt+F1 follows GlazeWM's pause state; use
+Alt+Shift+P to resume desktop shortcuts when paused.
+
+## Floating windows
+
+Floating windows are centered and stay above tiled windows by default.
+Minimize a floating window when you want it out of view. Fullscreen windows
+keep their separate default and are not made always on top.
+
+No Zoom-specific window rule is installed. A small meeting window recovered
+during testing after floating was toggled off; joining calls and sharing screens
+still need broader application testing. If a call dialog becomes unusably small,
+try toggling floating off or pausing GlazeWM with Alt+Shift+P.
+
+## Liquid Glass taskbar experiment (optional, rolled back)
+
+The Liquid Glass appearance was tried on both monitors and rolled back on
+2026-10-29. The default setup keeps the existing Windows taskbar appearance.
+Windhawk is not in `packages.json`, and `Install.ps1` never applies its settings.
+The preset and recovery helper below are retained as an optional experiment.
+
+The taskbar preset in `configs/windhawk/liquid-glass.json` uses Windhawk's
+**Windows 11 Taskbar Styler** mod with the **OS26 Liquid Glass (Dark MacDock)**
+theme by WasiXGamer. App icons use 82% opacity and return to full opacity on
+hover; their backgrounds use translucent Fwog Pond gradients.
+
+Install Windhawk (`winget install --id RamenSoftware.Windhawk --exact`) and
+install **Windows 11 Taskbar Styler** by m417z from its catalog. Then run from
+an administrator PowerShell in this repository:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Set-TaskbarTheme.ps1
+```
+
+The helper requires administrator permission and backs up the mod's original settings once in
+`%LOCALAPPDATA%\OmarchyWindows\windhawk-taskbar-original.json`, applies the
+preset, and asks Windhawk to reload it without restarting Explorer. To undo,
+run the same helper with `-Restore`, or disable the mod in Windhawk. These
+Windhawk settings have their own restore step, separate from the desktop
+configuration-file restore below. Restoring settings does not uninstall Windhawk
+or the mod; remove them separately if no longer wanted.
+
+Do not combine this preset with the **Taskbar height and icon size** mod;
+the theme controls its own dock height. Upstream theme and customization
+reference: [OS26 Liquid Glass](https://github.com/ramensoftware/windows-11-taskbar-styling-guide/tree/main/Themes/OS26%20Liquid%20Glass).
 
 ## Reapply after pulling changes
 
@@ -103,9 +164,14 @@ Your Omarchy uses a 60% centered master layout, custom pop-out behavior, and ind
 - `Install.ps1`, `install.cmd`: Windows bootstrap and configuration application.
 - `packages.json`: exact WinGet package IDs; installs currently available versions.
 - `theme.json`: personal Fwog Pond palette, translated from the current Omarchy theme.
-- `configs/`: GlazeWM, WezTerm, and custom Zebar bar templates.
+- `configs/`: GlazeWM, WezTerm, and custom Zebar bar templates, plus the optional taskbar experiment.
 - `scripts/`: stable startup, diagnostics, and restore helpers.
 - `tests/`: parser checks and isolated install/rerun/restore checks.
 - `docs/PROJECT.md`: scope, source references, and implementation decisions.
 
 Run diagnostics with `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Doctor.ps1`.
+Run automated checks with `.\tests\Verify.ps1` in Windows PowerShell 5.1 or
+PowerShell 7. The lifecycle checks require GlazeWM and Zebar to be closed,
+including when their file targets are temporary; GitHub Actions runs both shells
+on a clean Windows runner. To check shortcut parsing and search while using the
+desktop, run `.\tests\Keybindings.ps1`.

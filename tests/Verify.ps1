@@ -8,6 +8,7 @@ Get-ChildItem -LiteralPath $root -Recurse -Filter '*.ps1' | ForEach-Object {
     if ($parseErrors.Count) { throw ($parseErrors | Out-String) }
 }
 function Assert([bool]$Condition, [string]$Message) { if (!$Condition) { throw $Message } }
+& "$PSScriptRoot\Keybindings.ps1"
 # No packages, registry, startup entries, app launches, or real profile files are touched.
 $temp = Join-Path ([IO.Path]::GetTempPath()) ('omarchy-test-'+[guid]::NewGuid())
 $originalOS = $env:OS
@@ -37,6 +38,7 @@ try {
     & "$root\scripts\Restore.ps1" -StateDirectory (Join-Path $temp 'state') -Confirm:$false
     Assert ([Convert]::ToBase64String([IO.File]::ReadAllBytes($terminal)) -eq [Convert]::ToBase64String($original)) 'Restore changed original file bytes.'
     Assert (!(Test-Path -LiteralPath (Join-Path $profilePath '.glzr\glazewm\config.yaml'))) 'Restore left a newly created config.'
+    Assert (!(Test-Path -LiteralPath (Join-Path $temp 'state\Show-Keybindings.ps1'))) 'Restore left the installed shortcut menu.'
     # Applying after restore must remain possible and retain the original baseline.
     & "$root\Install.ps1" -SandboxRoot $temp
     & "$root\scripts\Restore.ps1" -StateDirectory (Join-Path $temp 'state') -Confirm:$false
@@ -44,5 +46,10 @@ try {
     Write-Host 'PASS: parsing, theme rendering, first install, safe rerun, WhatIf, restore, reapply.'
 } finally {
     $env:OS = $originalOS
-    if (Test-Path -LiteralPath $temp) { Remove-Item -LiteralPath $temp -Recurse -Force }
+    $resolvedTestPath = [IO.Path]::GetFullPath($temp)
+    $expectedTestParent = [IO.Path]::GetFullPath([IO.Path]::GetTempPath()).TrimEnd('\')
+    if ((Split-Path -Parent $resolvedTestPath) -ne $expectedTestParent -or (Split-Path -Leaf $resolvedTestPath) -notlike 'omarchy-test-*') {
+        throw 'Refusing cleanup outside the installer test directory.'
+    }
+    if (Test-Path -LiteralPath $resolvedTestPath) { Remove-Item -LiteralPath $resolvedTestPath -Recurse -Force }
 }
