@@ -23,7 +23,13 @@ Use your normal Windows user account. WinGet may show an administrator prompt fo
 
    Alternatively, after `gh auth login`, use `gh repo clone CaseyTea/fwogmarchy-windows`.
 
-Setup installs missing packages, backs up settings, applies the configurations, adds a login startup entry, and starts GlazeWM. It fails before writing configs if required executables cannot be found. If an installer requests a restart, reboot and rerun setup. Internet is required for installation and the bar's initial API load.
+Setup installs missing packages, backs up settings, applies the configurations,
+adds a per-user Windows startup shortcut, and starts the desktop. The shortcut
+starts GlazeWM and the Fwog Pond bar when you sign in. After launcher setup below,
+it also starts PowerToys so Alt+Shift+Space is available. It fails before writing
+configs if required executables cannot be found. If an installer requests a
+restart, reboot and rerun setup. Internet is required for installation and the
+bar's initial API load.
 
 Review the scripts before running. `install.cmd` uses a process-only execution policy for this script; it does not change the machine's saved execution policy. Organization-managed restrictions can still prevent execution.
 
@@ -83,14 +89,20 @@ its default **Win+Alt+Space** shortcut. Then run:
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Set-AppLauncher.ps1
 ```
 
+If you configured the launcher before the startup update, run this helper again
+once to opt it into sign-in startup; its original shortcut backup is retained.
+
 The helper changes only the activation shortcut and saves the original under
 `%LOCALAPPDATA%\OmarchyWindows\command-palette-hotkey-original.json`. It preserves
-your extensions, pinned items, appearance, and other preferences. If the new
-shortcut is not picked up immediately, restart Command Palette. Enable
-PowerToys' **Run at startup** option to keep the launcher available after login.
+your extensions, pinned items, appearance, and other preferences. It also opts
+PowerToys into this project's sign-in startup through `app-launcher-startup.json`.
+Keep Command Palette enabled in PowerToys. A separate PowerToys startup entry
+is not required. If the new shortcut is not picked up immediately, restart
+Command Palette.
 
 To restore just the previous launcher shortcut, run the same helper with
-`-Restore`. The core desktop file restore does not change this PowerToys setting.
+`-Restore`; this also removes the project's launcher-startup opt-in. The core
+desktop file restore does not change the PowerToys shortcut setting.
 Run the launcher restore first if you want both undone.
 Alt+F1 shows the actual launcher shortcut read from Command Palette's settings,
 including changes made later in its UI.
@@ -162,6 +174,23 @@ git pull
 ```
 
 Reapplication replaces this project's managed configuration files. Put lasting changes in the repository templates or `theme.json`, then reapply. Existing packages are not automatically upgraded. The original pre-install backup is retained across reruns.
+
+The sign-in entry is `OmarchyWindows.lnk` in your user Startup folder and points
+to the stable LocalAppData startup helper. Reapplying migrates the previous
+project-owned `OmarchyWindows.cmd` entry. Keep only this project startup entry;
+avoid enabling a separate GlazeWM/Zebar entry for the same desktop.
+
+If the desktop does not appear after signing in, run this from PowerShell:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$env:LOCALAPPDATA\OmarchyWindows\Start-Desktop.ps1"
+```
+
+Use `scripts/Doctor.ps1` to inspect the setup. The helper waits for GlazeWM, requests the bar even if the WM was
+already running, and writes results to
+`%LOCALAPPDATA%\OmarchyWindows\startup.log`. Failures in one component are logged
+while the other components are still attempted. A missing terminal does not
+prevent the bar or window manager from starting.
 
 Options: `-NoStart` applies without launching; `-NoStartup` does not create a login startup entry (it does not remove a previously created entry); `-SkipPackages` requires the core apps to already be installed. `-SandboxRoot <path>` is for isolated installer tests and disables packages, startup, and launching.
 

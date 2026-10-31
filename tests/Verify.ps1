@@ -10,6 +10,7 @@ Get-ChildItem -LiteralPath $root -Recurse -Filter '*.ps1' | ForEach-Object {
 function Assert([bool]$Condition, [string]$Message) { if (!$Condition) { throw $Message } }
 & "$PSScriptRoot\Keybindings.ps1"
 & "$PSScriptRoot\AppLauncher.ps1"
+& "$PSScriptRoot\Startup.ps1"
 # No packages, registry, startup entries, app launches, or real profile files are touched.
 $temp = Join-Path ([IO.Path]::GetTempPath()) ('omarchy-test-'+[guid]::NewGuid())
 $originalOS = $env:OS

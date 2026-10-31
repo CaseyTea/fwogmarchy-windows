@@ -1,5 +1,13 @@
 # Change log
 
+## 2026-10-30
+
+- Replaced the legacy project startup batch file with a standard Windows startup shortcut targeting the stable helper and working directory. The installer migrates the old matching entry and retains both files' original restore baselines.
+- Added startup logging, a single-instance guard, bounded GlazeWM readiness checks, and explicit bar recovery when the WM is already running. A missing terminal no longer blocks the desktop.
+- Made the desktop helper the single owner of bar startup; GlazeWM's startup command list is now empty.
+- Added PowerToys/Command Palette startup after launcher setup, preserving its shortcut backup and other module preferences. Launcher restore removes this startup opt-in.
+- Added native startup-shortcut and launcher opt-in checks. Direct shortcut launch restored both desktop and launcher; a stopped-state desktop launch and repeated-startup instance check passed. A fresh sign-in remains to be verified.
+
 ## 2026-10-29
 
 - Changed the Fwog Pond bar to normal window priority so it can be covered by fullscreen games and videos. Desktop tiling keeps its existing top gap.

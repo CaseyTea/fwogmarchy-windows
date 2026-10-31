@@ -31,11 +31,12 @@ PowerToys Command Palette provides application search on Alt+Shift+Space after
 running `Set-AppLauncher.ps1`. PowerToys owns activation independently of
 GlazeWM. The helper backs up and changes only the shortcut, with a separate
 `-Restore` action that preserves newer unrelated preferences. The main installer
-copies the helper but does not replace PowerToys settings or enable its startup.
+copies the helper but does not replace PowerToys settings. Launcher setup also
+creates a desktop-managed startup opt-in; restoring the launcher removes it.
 The shortcut menu reads Command Palette's actual hotkey from its local settings
 when available; a missing or malformed external config does not break the menu.
 
-Zebar's pack name is `omarchy-windows`, matching the startup command. The bar's
+Zebar's pack name is `omarchy-windows`, matching the desktop helper's preset request. The bar's
 HTML, CSS, and JavaScript are explicitly listed in `includeFiles`; omitting
 those assets caused the original blank/error bar. GlazeWM starts with a hidden
 console window. The bar uses normal window priority so fullscreen games can
@@ -43,7 +44,30 @@ cover it; GlazeWM's existing top gap keeps tiled desktop windows below it.
 
 Each managed destination is recorded in an installation manifest before writing it. Existing file contents are saved once; reruns retain this baseline. Restore archives current managed files and restores originals, or removes files the project created. Settings backups stay outside the repository. Packages are installed before config changes; a required package failure stops application. Files already written during a later failure can be recovered using the manifest. There is no claim of a system-wide transaction or rollback of package installs.
 
-Login startup uses a per-user `.cmd` file calling a stable PowerShell script in LocalAppData. The clone can move after installation. Use only this login entry; disable any app-created duplicate autostart entries if the installed versions add them. Desktop apps run at the normal user privilege level. Tiling elevated applications still needs Windows testing.
+Login startup uses a per-user `.lnk` shortcut calling a stable PowerShell script
+in LocalAppData, with that directory as its working directory. The clone can
+move after installation. Reapplying migrates the matching project-owned `.cmd`
+entry; originals for both files remain covered by the restore manifest.
+
+The helper waits for GlazeWM's IPC listener, then explicitly requests the Zebar
+preset. GlazeWM's `startup_commands` is empty so a cold start has one owner for
+launching the bar. An already-running WM does not prevent bar recovery. Startup
+uses a per-session mutex, handles each component separately, and logs results
+in `startup.log`. A terminal lookup failure no longer blocks startup.
+
+After `Set-AppLauncher.ps1` creates `app-launcher-startup.json`, the same helper
+starts PowerToys when needed using its `--dont-elevate` argument and waits for
+Command Palette. PowerToys' own startup setting and unrelated module preferences
+are unchanged. Use only this login entry; avoid duplicate GlazeWM/Zebar startup
+entries. Tiling elevated applications still needs Windows testing.
+
+On 2026-10-30, neither the desktop nor launcher had appeared after boot. The old
+batch entry was present and launching its script manually worked; the exact
+reason Windows had not run it at sign-in was not established. The entry was
+replaced with a standard Windows startup shortcut, launcher startup was added,
+and logging/readiness handling was introduced. A fresh sign-in remains a
+separate acceptance check; directly launching a shortcut does not prove boot
+execution.
 
 The default font is requested but font files are not redistributed. Install JetBrainsMono Nerd Font yourself for an exact match; otherwise the terminal falls back to installed Windows fonts. WezTerm starts native PowerShell until WSL is configured.
 

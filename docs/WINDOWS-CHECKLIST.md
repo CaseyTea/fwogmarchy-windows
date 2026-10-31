@@ -28,9 +28,11 @@ and Cascadia Mono fallback. Unchecked items below still need manual validation.
 - [x] Configure Command Palette for Alt+Shift+Space; preserve and back up its original shortcut.
 - [x] Confirm Alt+Shift+Space opens the launcher, searches for an application, and launches it; user verified on 2026-10-29.
 - [ ] Confirm the launcher shortcut also works while GlazeWM is paused.
-- [ ] Enable PowerToys Run at startup if wanted, then verify launcher availability after signing in.
+- [x] Enable this project's launcher-startup opt-in; launch the new desktop shortcut and verify both the bar and Alt+Shift+Space return (2026-10-30).
+- [x] Start from stopped GlazeWM/Zebar processes through the native shortcut, then repeat startup and verify component process IDs remain unchanged with one instance each (2026-10-30).
+- [ ] After a fresh sign-in, confirm the bar, tiling, and app launcher start automatically and startup.log reports completion.
 - [ ] Open ShareX and select local capture destinations/hotkeys if desired.
-- [ ] Sign out/in; confirm startup is singular and uses this project's managed configuration.
+- [ ] Sign out/in; confirm the single OmarchyWindows.lnk startup shortcut uses this project's managed configuration without duplicate bars.
 - [x] Quit GlazeWM/Zebar; rerun install with -SkipPackages; verify baseline backups remain intact.
 - [ ] Preview Restore.ps1 -WhatIf, then restore and confirm original settings/startup state.
 - [ ] Reapply setup after the restore test.

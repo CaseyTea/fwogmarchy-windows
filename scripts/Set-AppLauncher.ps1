@@ -9,6 +9,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 $SettingsPath = [IO.Path]::GetFullPath($SettingsPath)
 $backupPath = Join-Path $StateDirectory 'command-palette-hotkey-original.json'
+$startupPath = Join-Path $StateDirectory 'app-launcher-startup.json'
 $originalText = [IO.File]::ReadAllText($SettingsPath)
 $settings = $originalText | ConvertFrom-Json
 if (!$settings.PSObject.Properties['Hotkey']) { throw 'Command Palette has no Hotkey setting. Enable and open it once in PowerToys before configuring the launcher.' }
@@ -43,6 +44,11 @@ if ($PSCmdlet.ShouldProcess($SettingsPath,$operation)) {
         [IO.File]::Replace($temporaryPath,$SettingsPath,[NullString]::Value)
     } finally {
         if (Test-Path -LiteralPath $temporaryPath) { Remove-Item -LiteralPath $temporaryPath -Force }
+    }
+    if ($Restore) {
+        if (Test-Path -LiteralPath $startupPath) { Remove-Item -LiteralPath $startupPath }
+    } else {
+        [IO.File]::WriteAllText($startupPath,'{"enabled":true}',[Text.UTF8Encoding]::new($false))
     }
     Write-Host "$operation complete. Original shortcut: $backupPath"
 }

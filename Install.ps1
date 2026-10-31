@@ -73,9 +73,14 @@ foreach ($name in @('Common.ps1','Start-Desktop.ps1','Restore.ps1','Doctor.ps1',
 }
 $planned += @{ Path=(Join-Path $stateDirectory 'theme.json'); Content=(Get-Content -LiteralPath "$PSScriptRoot\theme.json" -Raw) }
 if (!$NoStartup) {
-    $startupFile = Join-Path ([Environment]::GetFolderPath('Startup')) 'OmarchyWindows.cmd'
+    $startupDirectory = [Environment]::GetFolderPath('Startup')
+    $startupFile = Join-Path $startupDirectory 'OmarchyWindows.lnk'
     $runner = Join-Path $stateDirectory 'Start-Desktop.ps1'
-    $planned += @{ Path=$startupFile; Content="@echo off`r`npowershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$runner`"`r`n" }
+    $planned += @{ Path=$startupFile; ShortcutRunner=$runner }
+    $legacyStartup = Join-Path $startupDirectory 'OmarchyWindows.cmd'
+    if ((Test-Path -LiteralPath $legacyStartup -PathType Leaf) -and (Get-Content -LiteralPath $legacyStartup -Raw).Contains($runner)) {
+        $planned += @{ Path=$legacyStartup; Remove=$true }
+    }
 }
 # Capture originals once per installation. Reruns never replace the baseline backups.
 if (Test-Path -LiteralPath $statePath) {
@@ -99,7 +104,13 @@ foreach ($item in $planned) {
         # Record recovery information before changing each destination.
         Write-State $state $statePath
     }
-    Write-Utf8File $item.Path $item.Content
+    if ($item.ContainsKey('ShortcutRunner')) {
+        New-DesktopStartupShortcut $item.Path $item.ShortcutRunner
+    } elseif ($item.ContainsKey('Remove')) {
+        if (Test-Path -LiteralPath $item.Path -PathType Leaf) { Remove-Item -LiteralPath $item.Path }
+    } else {
+        Write-Utf8File $item.Path $item.Content
+    }
 }
 Write-Host "Settings applied. Originals and restore tools: $stateDirectory"
 Write-Host 'Emergency pause: Alt+Shift+P. Exit tiling: Alt+Shift+Escape.'

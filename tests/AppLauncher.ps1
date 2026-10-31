@@ -18,6 +18,8 @@ try {
     $backupPath = Join-Path $stateDirectory 'command-palette-hotkey-original.json'
     $firstBackup = [IO.File]::ReadAllText($backupPath)
     $configured = Get-Content -LiteralPath $settingsPath -Raw | ConvertFrom-Json
+    $startupPath = Join-Path $stateDirectory 'app-launcher-startup.json'
+    Assert-Launcher ((Get-Content -LiteralPath $startupPath -Raw | ConvertFrom-Json).enabled) 'Launcher setup did not enable desktop-managed startup.'
     Assert-Launcher ($configured.Theme -eq 'Keep this' -and $configured.ProviderSettings.custom.value -eq 42) 'Setting the hotkey changed unrelated preferences.'
     $entry = @(Get-AppLauncherKeybinding $settingsPath)
     Assert-Launcher ($entry.Count -eq 1 -and $entry[0].Shortcuts -eq 'Alt+Shift+Space') 'Shortcut help did not read the actual launcher hotkey.'
@@ -28,6 +30,7 @@ try {
     Assert-Launcher ([IO.File]::ReadAllText($backupPath) -ceq $firstBackup) 'Reapplying replaced the original shortcut backup.'
     & $helper -SettingsPath $settingsPath -StateDirectory $stateDirectory -Restore -Confirm:$false
     $restored = Get-Content -LiteralPath $settingsPath -Raw | ConvertFrom-Json
+    Assert-Launcher (!(Test-Path -LiteralPath $startupPath)) 'Launcher restore left desktop-managed launcher startup enabled.'
     Assert-Launcher ($restored.Hotkey.win -and $restored.Hotkey.alt -and !$restored.Hotkey.shift -and $restored.Hotkey.code -eq 32) 'Restore lost the original launcher shortcut.'
     Assert-Launcher ($restored.Theme -eq 'Changed later' -and $restored.ProviderSettings.custom.value -eq 42) 'Restore overwrote newer unrelated preferences.'
     [IO.File]::WriteAllText($settingsPath,'{incomplete')

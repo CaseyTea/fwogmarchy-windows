@@ -1,6 +1,6 @@
 # Generated tokens are replaced by Install.ps1; edit this source then reapply.
 general:
-  startup_commands: ['shell-exec zebar start-widget-preset --pack omarchy-windows --widget-name bar --preset top']
+  startup_commands: []
   shutdown_commands: []
   config_reload_commands: []
   focus_follows_cursor: false
