@@ -49,6 +49,11 @@ in LocalAppData, with that directory as its working directory. The clone can
 move after installation. Reapplying migrates the matching project-owned `.cmd`
 entry; originals for both files remain covered by the restore manifest.
 
+The installer also creates a **Start Fwogmarchy** desktop shortcut to the same
+stable helper, including when automatic startup is disabled. The desktop path
+uses Windows' known folder location, and the shortcut participates in the normal
+backup/restore manifest. Isolated tests use a temporary profile's Desktop folder.
+
 The helper waits for GlazeWM's IPC listener, then explicitly requests the Zebar
 preset. GlazeWM's `startup_commands` is empty so a cold start has one owner for
 launching the bar. An already-running WM does not prevent bar recovery. Startup

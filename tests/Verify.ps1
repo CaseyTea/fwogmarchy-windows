@@ -22,13 +22,14 @@ try {
     $original = [byte[]]@(239,187,191,45,45,32,111,114,105,103,105,110,97,108,13,10)
     [IO.File]::WriteAllBytes($terminal,$original)
     & "$root\Install.ps1" -SandboxRoot $temp
+    Assert (Test-Path -LiteralPath (Join-Path $profilePath 'Desktop\Start Fwogmarchy.lnk')) 'Installer omitted manual recovery when automatic startup was disabled.'
     $statePath = Join-Path $temp 'state\state.json'
     $first = Get-Content -LiteralPath $statePath -Raw | ConvertFrom-Json
     $terminalEntry = $first.files | Where-Object { $_.path -eq $terminal }
     Assert ($null -ne $terminalEntry) 'Existing terminal config was not tracked.'
     Assert $terminalEntry.existed 'Existing terminal config was not backed up.'
     Assert ((Get-Content -LiteralPath $terminal -Raw) -match '#172823') 'Theme was not applied.'
-    Get-ChildItem -LiteralPath $profilePath -Recurse -File | ForEach-Object {
+    Get-ChildItem -LiteralPath $profilePath -Recurse -File | Where-Object Extension -ne '.lnk' | ForEach-Object {
         Assert (!((Get-Content -LiteralPath $_.FullName -Raw) -match '\{\{\w+\}\}')) "Unresolved token: $($_.FullName)"
     }
     & "$root\Install.ps1" -SandboxRoot $temp
@@ -41,6 +42,7 @@ try {
     Assert ([Convert]::ToBase64String([IO.File]::ReadAllBytes($terminal)) -eq [Convert]::ToBase64String($original)) 'Restore changed original file bytes.'
     Assert (!(Test-Path -LiteralPath (Join-Path $profilePath '.glzr\glazewm\config.yaml'))) 'Restore left a newly created config.'
     Assert (!(Test-Path -LiteralPath (Join-Path $temp 'state\Show-Keybindings.ps1'))) 'Restore left the installed shortcut menu.'
+    Assert (!(Test-Path -LiteralPath (Join-Path $profilePath 'Desktop\Start Fwogmarchy.lnk'))) 'Restore left the desktop recovery shortcut.'
     # Applying after restore must remain possible and retain the original baseline.
     & "$root\Install.ps1" -SandboxRoot $temp
     & "$root\scripts\Restore.ps1" -StateDirectory (Join-Path $temp 'state') -Confirm:$false

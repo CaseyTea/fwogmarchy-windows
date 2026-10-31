@@ -72,6 +72,9 @@ foreach ($name in @('Common.ps1','Start-Desktop.ps1','Restore.ps1','Doctor.ps1',
     $planned += @{ Path=(Join-Path $stateDirectory $name); Content=(Get-Content -LiteralPath "$PSScriptRoot\scripts\$name" -Raw) }
 }
 $planned += @{ Path=(Join-Path $stateDirectory 'theme.json'); Content=(Get-Content -LiteralPath "$PSScriptRoot\theme.json" -Raw) }
+# Keep manual recovery available even when automatic sign-in startup is disabled.
+$desktopDirectory = if ($SandboxRoot) { Join-Path $profileDirectory 'Desktop' } else { [Environment]::GetFolderPath('Desktop') }
+$planned += @{ Path=(Join-Path $desktopDirectory 'Start Fwogmarchy.lnk'); ShortcutRunner=(Join-Path $stateDirectory 'Start-Desktop.ps1') }
 if (!$NoStartup) {
     $startupDirectory = [Environment]::GetFolderPath('Startup')
     $startupFile = Join-Path $startupDirectory 'OmarchyWindows.lnk'

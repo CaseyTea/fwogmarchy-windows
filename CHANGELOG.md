@@ -2,6 +2,7 @@
 
 ## 2026-10-30
 
+- Added a Start Fwogmarchy desktop recovery shortcut to the full desktop launcher. It is available independently of automatic startup and is covered by the installer's backup/restore manifest.
 - Replaced the legacy project startup batch file with a standard Windows startup shortcut targeting the stable helper and working directory. The installer migrates the old matching entry and retains both files' original restore baselines.
 - Added startup logging, a single-instance guard, bounded GlazeWM readiness checks, and explicit bar recovery when the WM is already running. A missing terminal no longer blocks the desktop.
 - Made the desktop helper the single owner of bar startup; GlazeWM's startup command list is now empty.

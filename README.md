@@ -180,7 +180,13 @@ to the stable LocalAppData startup helper. Reapplying migrates the previous
 project-owned `OmarchyWindows.cmd` entry. Keep only this project startup entry;
 avoid enabling a separate GlazeWM/Zebar entry for the same desktop.
 
-If the desktop does not appear after signing in, run this from PowerShell:
+If the desktop does not appear after signing in, double-click **Start Fwogmarchy**
+on your desktop. It runs the same stable launcher to bring back tiling, the Fwog
+Pond bar, and the configured app launcher. It can be run again while components
+are already active. The installer creates this recovery shortcut even with
+`-NoStartup`, and the normal restore removes it or restores any prior file.
+
+You can also run the launcher from PowerShell:
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$env:LOCALAPPDATA\OmarchyWindows\Start-Desktop.ps1"

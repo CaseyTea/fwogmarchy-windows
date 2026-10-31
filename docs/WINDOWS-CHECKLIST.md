@@ -30,6 +30,7 @@ and Cascadia Mono fallback. Unchecked items below still need manual validation.
 - [ ] Confirm the launcher shortcut also works while GlazeWM is paused.
 - [x] Enable this project's launcher-startup opt-in; launch the new desktop shortcut and verify both the bar and Alt+Shift+Space return (2026-10-30).
 - [x] Start from stopped GlazeWM/Zebar processes through the native shortcut, then repeat startup and verify component process IDs remain unchanged with one instance each (2026-10-30).
+- [x] Launch the Start Fwogmarchy desktop recovery shortcut and confirm completion with one instance of each component (2026-10-30).
 - [ ] After a fresh sign-in, confirm the bar, tiling, and app launcher start automatically and startup.log reports completion.
 - [ ] Open ShareX and select local capture destinations/hotkeys if desired.
 - [ ] Sign out/in; confirm the single OmarchyWindows.lnk startup shortcut uses this project's managed configuration without duplicate bars.
